@@ -81,6 +81,23 @@ class DOMNodeCollection {
       el.remove();
     });
   }
+
+  on (e, callback) {
+    this.htmlElements.forEach(el => {
+      el.addEventListener(e, callback);
+      el.callback = callback;
+    });
+  }
+
+  off (e) {
+    this.htmlElements.forEach(el => {
+      // console.log(el);
+      console.log(el.callback);
+      el.removeEventListener(e, el.callback);
+      // console.log(typeof eval(el.getAttribute('callback')));
+      // console.log(eval(el.getAttribute('callback')));
+    });
+  }
 }
 
 module.exports = DOMNodeCollection;
