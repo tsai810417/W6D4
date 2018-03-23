@@ -98,6 +98,44 @@ class DOMNodeCollection {
       // console.log(eval(el.getAttribute('callback')));
     });
   }
+
+
+}
+
+$l.ajax = function(options) {
+  const defaults = {
+    success: successCallback,
+    error: 'error',
+    url: '',
+    method: 'GET',
+    data: ,
+    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+  }
+  function successCallback(data, textStatus, jqXHR) {
+
+  }
+  const xhr = new XMLHttpRequest;
+  xhr.addEventListener('load', cb);
+  xhr.open(options.type, options.url);
+  const json = JSON.stringify({query: this.input.value});
+  xhr.send();
+
+//   //step 1 - create xhr object
+// const xhr = new XMLHttpRequest();
+//
+// // step 2 - specify path and verb
+// xhr.open('POST', 'api/path/to/resource');
+//
+// // step 3 - register a callback
+// xhr.onload = function () {
+//   console.log(xhr.status) // for status info
+//   console.log(xhr.responseType) //the type of data that was returned
+//   console.log(xhr.response) //the actual response. For JSON api calls, this will be a JSON string
+// }
+//
+// // step 4 - send off the request with optional data
+// const optionalData = { name: "User1", password : "123456" };
+// xhr.send(optionalData);
 }
 
 module.exports = DOMNodeCollection;

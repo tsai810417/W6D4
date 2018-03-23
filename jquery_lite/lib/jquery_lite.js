@@ -68,130 +68,39 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 const DOMNodeCollection = __webpack_require__(1);
-Window.prototype.$l = function(htmlElement) {
+let functionArr = [];
+Window.prototype.$l = function(arg) {
   let nodeList;
   let nodeListArr;
   let nodeListCollection;
-  if (htmlElement instanceof HTMLElement) {
-    const array = [htmlElement];
+  if (arg instanceof HTMLElement) {
+    const array = [arg];
     nodeListCollection = new DOMNodeCollection(array);
+  } else if (arg instanceof Function) {
+    if (document.readyState === 'complete') {
+      return arg();
+    } else {
+      functionArr.push(arg);
+    }
   } else {
-    nodeList = document.querySelectorAll(htmlElement);
+    nodeList = document.querySelectorAll(arg);
     nodeListArr = Array.from(nodeList);
     nodeListCollection = new DOMNodeCollection(nodeListArr);
   }
   return nodeListCollection;
 };
+document.addEventListener("DOMContentLoaded", () => {
+  functionArr.forEach( fcn => {
+    fcn();
+  });
+});
 
 
 /***/ }),
 /* 1 */
 /***/ (function(module, exports) {
 
-class DOMNodeCollection {
-  constructor(htmlElements) {
-    this.htmlElements = htmlElements;
-  }
-
-  html (string) {
-    if (string) {
-      this.htmlElements.forEach( (el, idx) => {
-        el.innerHTML = string;
-      });
-    } else {
-      return this.htmlElements[0].innerHTML;
-    }
-  }
-
-  empty () {
-    this.htmlElements.forEach( (el, idx) => {
-      el.innerHTML = '';
-    });
-  }
-
-  append (arg) {
-    if (arg instanceof HTMLElement || arg instanceof String) {
-      this.htmlElements.forEach( (el, idx) => {
-        el.innerHTML.appendChild(arg);
-      });
-    } else {
-      this.htmlElements.forEach( (el, idx) => {
-        arg.forEach( (el2, idx2) => {
-          el.innerHTML.appendChild(el2.outerHTML);
-        });
-      });
-    }
-  }
-
-  attr (key, val) {
-    if (!val) {
-      return this.htmlElements[0].getAttribute(key);
-    } else {
-      this.htmlElements[0].setAttribute(key, val);
-    }
-  }
-
-  addClass (string) {
-    this.htmlElements[0].classList.add(string);
-  }
-
-  removeClass (string) {
-    this.htmlElements[0].classList.remove(string);
-  }
-
-  children () {
-    const allChildren = [];
-    this.htmlElements.forEach( (parent, idx) => {
-      allChildren.push(parent.children);
-    });
-    return new DOMNodeCollection(allChildren);
-  }
-
-  parent () {
-    const parents = [];
-    this.htmlElements.forEach( (child, idx) => {
-      parents.push(child.parentNode);
-    });
-    return new DOMNodeCollection(parents);
-  }
-
-  find (selector) {
-    let array = this.htmlElements;
-    this.htmlElements.forEach(el => {
-      console.log(typeof el);
-      array.push(el.querySelectorAll(selector));
-    });
-
-    return array;
-  }
-
-  remove () {
-    this.htmlElements.forEach(el => {
-      el.innerHTML = '';
-      el.remove();
-    });
-  }
-
-  on (e, callback) {
-    this.htmlElements.forEach(el => {
-      el.addEventListener(e, callback);
-      el.callback = callback;
-    });
-  }
-
-  off (e) {
-    this.htmlElements.forEach(el => {
-      // console.log(el);
-      console.log(el.callback);
-      el.removeEventListener(e, el.callback);
-      // console.log(typeof eval(el.getAttribute('callback')));
-      // console.log(eval(el.getAttribute('callback')));
-    });
-  }
-}
-
-module.exports = DOMNodeCollection;
-
+throw new Error("Module parse failed: /Users/appacademy/Desktop/W6D4/jquery_lite/lib/dom_node_collection.js Unexpected token (111:10)\nYou may need an appropriate loader to handle this file type.\n|     url: '',\n|     method: 'GET',\n|     data: ,\n|     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',\n|   }");
 
 /***/ })
 /******/ ]);
